@@ -52,7 +52,7 @@ export default class InitCommand extends Command {
   ensureLernaJson() {
     const {versionLocation, lernaJsonLocation, lernaJson} = this.repository;
 
-    let version;
+    let version, owners;
 
     if (this.flags.independent) {
       version = "independent";
@@ -64,6 +64,12 @@ export default class InitCommand extends Command {
       version = "0.0.0";
     }
 
+    if (lernaJson) {
+      owners = lernaJson.owners;
+    } else {
+      owners = [];
+    }
+
     if (!lernaJson) {
       this.logger.info("Creating lerna.json.");
     } else {
@@ -72,7 +78,8 @@ export default class InitCommand extends Command {
 
     FileSystemUtilities.writeFileSync(lernaJsonLocation, JSON.stringify({
       lerna: this.lernaVersion,
-      version: version
+      version: version,
+      owners: owners
     }, null, "  "));
   }
 
