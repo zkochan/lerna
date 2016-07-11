@@ -1,3 +1,4 @@
+import FileSystemUtilities from "../FileSystemUtilities";
 import NpmUtilities from "../NpmUtilities";
 import PackageUtilities from "../PackageUtilities";
 import Command from "../Command";
@@ -7,6 +8,7 @@ import async from "async";
 import find from "lodash.find";
 import path from "path";
 import normalize from "normalize-path";
+import fs from "fs";
 
 export default class BootstrapCommand extends Command {
   initialize(callback) {
@@ -57,6 +59,7 @@ export default class BootstrapCommand extends Command {
 
       async.parallelLimit(batch.map(pkg => done => {
         async.series([
+          cb => FileSystemUtilities.mkdirp(pkg.nodeModulesLocation, cb),
           cb => this.linkDependenciesForPackage(pkg, cb),
           cb => this.installExternalPackages(pkg, cb),
         ], err => {
@@ -83,8 +86,7 @@ export default class BootstrapCommand extends Command {
     async.each(this.packages, (dependency, done) => {
       if (!this.hasMatchingDependency(pkg, dependency, true)) return done();
 
-      ChildProcessUtilities.execSync(`npm link ${dependency.location}`, {cwd: pkg.location});
-      done();
+      fs.symlink(dependency.location, path.join(pkg.location, 'node_modules', dependency.name), 'dir', done);
     }, callback);
   }
 
