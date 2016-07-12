@@ -1,6 +1,8 @@
 import ChildProcessUtilities from "./ChildProcessUtilities";
 import logger from "./logger";
 
+const installer = process.env.PREFER_PNPM ? "pnpm" : "npm";
+
 export default class NpmUtilities {
   @logger.logifyAsync
   static installInDir(directory, dependencies, callback) {
@@ -15,7 +17,7 @@ export default class NpmUtilities {
       stdio: ["ignore", "ignore", "pipe"],
     }
 
-    ChildProcessUtilities.spawn("pnpm", args, opts, callback);
+    ChildProcessUtilities.spawn(installer, args, opts, callback);
   }
 
   @logger.logifySync
@@ -35,7 +37,7 @@ export default class NpmUtilities {
 
   @logger.logifySync
   static execInDir(command, args, directory, callback) {
-    ChildProcessUtilities.exec(`pnpm ${command} ${args.join(" ")}`, { cwd: directory, env: process.env }, callback);
+    ChildProcessUtilities.exec(`${installer} ${command} ${args.join(" ")}`, { cwd: directory, env: process.env }, callback);
   }
 
   @logger.logifyAsync
