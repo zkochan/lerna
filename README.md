@@ -1,22 +1,16 @@
-<p align="center">
-  <img alt="Lerna" src="https://cloud.githubusercontent.com/assets/952783/15271604/6da94f96-1a06-11e6-8b04-dc3171f79a90.png" width="480">
-</p>
+# @zkochan/lerna
 
-<p align="center">
-  A tool for managing JavaScript projects with multiple packages.
-</p>
+> A tool for managing JavaScript projects with multiple packages.
 
-<p align="center">
-  <a href="https://www.npmjs.com/package/lerna"><img alt="NPM Status" src="https://img.shields.io/npm/v/lerna.svg?style=flat"></a>
-  <a href="https://travis-ci.org/lerna/lerna"><img alt="Travis Status" src="https://img.shields.io/travis/lerna/lerna/master.svg?style=flat&label=travis"></a>
-  <a href="https://slack.lernajs.io/"><img alt="Slack Status" src="https://slack.lernajs.io/badge.svg"></a>
-</p>
+<!--@shields('travis', 'npm')-->
+[![Build Status](https://img.shields.io/travis/zkochan/lerna/master.svg)](https://travis-ci.org/zkochan/lerna) [![npm version](https://img.shields.io/npm/v/@zkochan/lerna.svg)](https://www.npmjs.com/package/@zkochan/lerna)
+<!--/@-->
 
 ## About
 
 Splitting up large codebases into separate independently versioned packages
 is extremely useful for code sharing. However, making changes across many
-repositories is *messy* and difficult to track, and testing across repositories
+repositories is _messy_ and difficult to track, and testing across repositories
 gets complicated really fast.
 
 To solve these (and many other) problems, some projects will organize their
@@ -31,15 +25,13 @@ repositories with git and npm.**
 
 There's actually very little to it. You have a file system that looks like this:
 
-```
-my-lerna-repo/
-  package.json
-  packages/
-    package-1/
+    my-lerna-repo/
       package.json
-    package-2/
-      package.json
-```
+      packages/
+        package-1/
+          package.json
+        package-2/
+          package.json
 
 ### What can Lerna do?
 
@@ -57,9 +49,9 @@ Let's start by installing Lerna globally with [npm](https://www.npmjs.com/).
 
 ```sh
 # install the latest 2.x version using the `prerelease` dist-tag
-$ npm install --global lerna@prerelease
+$ npm install --global @zkochan/lerna@prerelease
 # install version directly
-$ npm install --global lerna@^2.0.0-beta
+$ npm install --global @zkochan/lerna@^2.0.0-beta
 ```
 
 Next we'll create a new [git](https://git-scm.com/) repository:
@@ -77,12 +69,10 @@ $ lerna init
 
 Your repository should now look like this:
 
-```
-lerna-repo/
-  packages/
-  package.json
-  lerna.json
-```
+    lerna-repo/
+      packages/
+      package.json
+      lerna.json
 
 This will create a `lerna.json` configuration file as well as a `packages` folder.
 
@@ -117,6 +107,7 @@ Create a new Lerna repo or upgrade an existing repo to the current version of Le
 > Lerna assumes the repo has already been initialized with `git init`.
 
 When run, this command will:
+
 1. Add `lerna` as a [`devDependency`](https://docs.npmjs.com/files/package.json#devdependencies) in `package.json` if it doesn't already exist.
 2. Create a `lerna.json` config file to store the `version` number.
 3. Create a `packages` directory if it hasn't been created already.
@@ -164,7 +155,7 @@ Currently, what Lerna does to link internal dependencies is replace the
 Let's use `babel` as an example.
 
 - `babel-generator` and `source-map` (among others) are dependencies of `babel-core`.
--  `babel-core`'s [`package.json`](https://github.com/babel/babel/blob/13c961d29d76ccd38b1fc61333a874072e9a8d6a/packages/babel-core/package.json#L28-L47) lists both these packages as keys in `dependencies`, as shown below.
+- `babel-core`'s [`package.json`](https://github.com/babel/babel/blob/13c961d29d76ccd38b1fc61333a874072e9a8d6a/packages/babel-core/package.json#L28-L47) lists both these packages as keys in `dependencies`, as shown below.
 
 ```js
 // babel-core package.json
@@ -203,13 +194,13 @@ Creates a new git commit/tag in the process of publishing to npm.
 More specifically, this command will:
 
 1. Publish each module in `packages` that has been updated since the last version to npm with the [dist-tag](https://docs.npmjs.com/cli/dist-tag) `lerna-temp`.
-  1. Run the equivalent of `lerna updated` to determine which packages need to be published.
-  2. If necessary, increment the `version` key in `lerna.json`.
-  3. Update the `package.json` of all updated packages to their new versions.
-  4. Update all dependencies of the updated packages with the new versions.
-  5. Create a new git commit and tag for the new version.
-  6. Publish updated packages to npm.
-2. Once all packages have been published, remove the `lerna-temp` tags and add the tags to `latest`.
+2. Run the equivalent of `lerna updated` to determine which packages need to be published.
+3. If necessary, increment the `version` key in `lerna.json`.
+4. Update the `package.json` of all updated packages to their new versions.
+5. Update all dependencies of the updated packages with the new versions.
+6. Create a new git commit and tag for the new version.
+7. Publish updated packages to npm.
+8. Once all packages have been published, remove the `lerna-temp` tags and add the tags to `latest`.
 
 > A temporary dist-tag is used at the start to prevent the case where only some of the packages are published; this can cause issues for users installing a package that only has some updated packages.
 
@@ -484,3 +475,7 @@ $ lerna publish --only-explicit-updates
 ```
 
 Ex: in Babel, `babel-types` is depended upon by all packages in the monorepo (over 100). However, Babel uses `^` for most of it's dependencies so it isn't necessary to bump the versions of all packages if only `babel-types` is updated. This option allows only the packages that have been explicitly updated to make a new version.
+
+## License
+
+[MIT](./LICENSE) © [Zoltan Kochan](http://kochan.io)
