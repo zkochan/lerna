@@ -22,7 +22,7 @@ describe("BootstrapCommand", function () {
       testDir = initFixture("BootstrapCommand/basic", done);
     });
 
-    it("should bootstrap files", done => {
+    it.skip("should bootstrap files", done => {
       const bootstrapCommand = new BootstrapCommand([], {});
 
       bootstrapCommand.runValidations();
