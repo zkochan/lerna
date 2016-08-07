@@ -29,7 +29,7 @@ describe("UpdatedCommand", () => {
       execSync("git tag v1.0.0");
       execSync("touch " + path.join(testDir, "packages/package-2/random-file"));
       execSync("git add -A");
-      execSync("git commit -m 'Commit'");
+      execSync("git commit --no-gpg-sign -m 'Commit'");
 
       const updatedCommand = new UpdatedCommand([], {});
 
@@ -52,7 +52,7 @@ describe("UpdatedCommand", () => {
       execSync("git tag v1.0.0");
       execSync("touch " + path.join(testDir, "packages/package-2/random-file"));
       execSync("git add -A");
-      execSync("git commit -m 'Commit'");
+      execSync("git commit --no-gpg-sign -m 'Commit'");
 
       const updatedCommand = new UpdatedCommand([], {
         forcePublish: "*"
@@ -77,7 +77,7 @@ describe("UpdatedCommand", () => {
       execSync("git tag v1.0.0");
       execSync("touch " + path.join(testDir, "packages/package-3/random-file"));
       execSync("git add -A");
-      execSync("git commit -m 'Commit'");
+      execSync("git commit --no-gpg-sign -m 'Commit'");
 
       const updatedCommand = new UpdatedCommand([], {
         forcePublish: "package-2,package-4"
@@ -110,7 +110,7 @@ describe("UpdatedCommand", () => {
       execSync("touch " + path.join(testDir, "packages/package-2/ignored-file"));
       execSync("touch " + path.join(testDir, "packages/package-3/random-file"));
       execSync("git add -A");
-      execSync("git commit -m 'Commit'");
+      execSync("git commit --no-gpg-sign -m 'Commit'");
 
       const updatedCommand = new UpdatedCommand([], {});
 
@@ -133,7 +133,7 @@ describe("UpdatedCommand", () => {
       execSync("git tag v1.0.0");
       execSync("touch " + path.join(testDir, "packages/package-2/random-file"));
       execSync("git add -A");
-      execSync("git commit -m 'Commit'");
+      execSync("git commit --no-gpg-sign -m 'Commit'");
 
       const updatedCommand = new UpdatedCommand([], {
         onlyExplicitUpdates: true
@@ -170,7 +170,7 @@ describe("UpdatedCommand", () => {
       execSync("git tag v1.0.0");
       execSync("touch " + path.join(testDir, "packages/package-3/random-file"));
       execSync("git add -A");
-      execSync("git commit -m 'Commit'");
+      execSync("git commit --no-gpg-sign -m 'Commit'");
 
       const updatedCommand = new UpdatedCommand([], {});
 
@@ -193,7 +193,7 @@ describe("UpdatedCommand", () => {
       execSync("git tag v1.0.0");
       execSync("touch " + path.join(testDir, "packages/package-2/random-file"));
       execSync("git add -A");
-      execSync("git commit -m 'Commit'");
+      execSync("git commit --no-gpg-sign -m 'Commit'");
 
       const updatedCommand = new UpdatedCommand([], {
         forcePublish: "*"
@@ -218,7 +218,7 @@ describe("UpdatedCommand", () => {
       execSync("git tag v1.0.0");
       execSync("touch " + path.join(testDir, "packages/package-4/random-file"));
       execSync("git add -A");
-      execSync("git commit -m 'Commit'");
+      execSync("git commit --no-gpg-sign -m 'Commit'");
 
       const updatedCommand = new UpdatedCommand([], {
         forcePublish: "package-2"
@@ -251,7 +251,7 @@ describe("UpdatedCommand", () => {
       execSync("touch " + path.join(testDir, "packages/package-2/ignored-file"));
       execSync("touch " + path.join(testDir, "packages/package-3/random-file"));
       execSync("git add -A");
-      execSync("git commit -m 'Commit'");
+      execSync("git commit --no-gpg-sign -m 'Commit'");
 
       const updatedCommand = new UpdatedCommand([], {});
 

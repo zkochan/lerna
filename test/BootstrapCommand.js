@@ -1,8 +1,6 @@
 import pathExists from "path-exists";
 import assert from "assert";
 import path from "path";
-import fs from "fs";
-import normalize from "normalize-path";
 
 import ChildProcessUtilities from "../src/ChildProcessUtilities";
 import BootstrapCommand from "../src/commands/BootstrapCommand";

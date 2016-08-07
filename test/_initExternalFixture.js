@@ -22,7 +22,7 @@ export default function initExternalFixture(fixturePath, callback) {
 
   fse.copy(fixtureDir, testDir, err => {
     if (err) return callback(err);
-    (child.execSync || syncExec)("git init . && git add -A && git commit -m \"Init external commit\"", {
+    (child.execSync || syncExec)("git init . && git add -A && git commit --no-gpg-sign -m \"Init external commit\"", {
       cwd: testDir
     });
     callback();

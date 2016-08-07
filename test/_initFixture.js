@@ -28,7 +28,7 @@ export default function initFixture(fixturePath, callback) {
   fse.copy(fixtureDir, testDir,  err => {
     if (err) return callback(err);
     process.chdir(testDir);
-    (child.execSync || syncExec)("git init . && git add -A && git commit -m \"Init commit\"");
+    (child.execSync || syncExec)("git init . && git add -A && git commit --no-gpg-sign -m \"Init commit\"");
     callback();
   });
 

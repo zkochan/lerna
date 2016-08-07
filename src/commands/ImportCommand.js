@@ -101,7 +101,7 @@ export default class ImportCommand extends Command {
       //
       // Fall back to three-way merge, which can help with duplicate commits
       // due to merge history.
-      exec("git am -3", {}, err => {
+      exec("git am --no-gpg-sign -3", {}, err => {
         if (err) {
 
           // Give some context for the error message.
