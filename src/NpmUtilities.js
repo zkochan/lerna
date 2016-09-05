@@ -1,7 +1,7 @@
 import ChildProcessUtilities from "./ChildProcessUtilities";
 import logger from "./logger";
 
-const installer = process.env.PREFER_PNPM ? "pnpm" : "npm";
+const installer = "pnpm";
 
 export default class NpmUtilities {
   @logger.logifyAsync

@@ -2,11 +2,11 @@ import FileSystemUtilities from "../FileSystemUtilities";
 import NpmUtilities from "../NpmUtilities";
 import PackageUtilities from "../PackageUtilities";
 import Command from "../Command";
+import ChildProcessUtilities from "../ChildProcessUtilities";
 import semver from "semver";
 import async from "async";
 import find from "lodash.find";
 import path from "path";
-import fs from "fs";
 
 export default class BootstrapCommand extends Command {
   initialize(callback) {
@@ -84,7 +84,8 @@ export default class BootstrapCommand extends Command {
     async.each(this.packages, (dependency, done) => {
       if (!this.hasMatchingDependency(pkg, dependency, true)) return done();
 
-      fs.symlink(dependency.location, path.join(pkg.location, "node_modules", dependency.name), "dir", done);
+      ChildProcessUtilities.execSync(`pnpm link ${dependency.location}`, {cwd: pkg.location});
+      done();
     }, callback);
   }
 
