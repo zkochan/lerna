@@ -29,7 +29,7 @@ export default class PackageGraph {
         const depVersion = dependencies[depName];
         const packageNode = this.nodesByName[depName];
 
-        if (packageNode && semver.satisfies(packageNode.package.version, depVersion)) {
+        if (packageNode && (depVersion.substr(0, 5) === 'file:' || semver.satisfies(packageNode.package.version, depVersion))) {
           node.dependencies.push(depName);
         }
       }

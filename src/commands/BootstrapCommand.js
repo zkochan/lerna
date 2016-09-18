@@ -58,7 +58,6 @@ export default class BootstrapCommand extends Command {
       async.parallelLimit(batch.map(pkg => done => {
         async.series([
           cb => FileSystemUtilities.mkdirp(pkg.nodeModulesLocation, cb),
-          cb => this.linkDependenciesForPackage(pkg, cb),
           cb => this.installExternalPackages(pkg, cb),
         ], err => {
           this.progressBar.tick(pkg.name);
@@ -80,38 +79,8 @@ export default class BootstrapCommand extends Command {
     bootstrapBatch();
   }
 
-  linkDependenciesForPackage(pkg, callback) {
-    async.each(this.packages, (dependency, done) => {
-      if (!this.hasMatchingDependency(pkg, dependency, true)) return done();
-
-      ChildProcessUtilities.execSync(`pnpm link ${dependency.location}`, {cwd: pkg.location});
-      done();
-    }, callback);
-  }
-
   installExternalPackages(pkg, callback) {
-    const allDependencies = pkg.allDependencies;
-
-    const externalPackages = Object.keys(allDependencies)
-      .filter(dependency => {
-        const match = find(this.packages, pkg => {
-          return pkg.name === dependency;
-        });
-
-        return !(match && this.hasMatchingDependency(pkg, match));
-      })
-      .filter(dependency => {
-        return !this.hasDependencyInstalled(pkg, dependency);
-      })
-      .map(dependency => {
-        return dependency + "@" + allDependencies[dependency];
-      });
-
-    if (externalPackages.length) {
-      NpmUtilities.installInDir(pkg.location, externalPackages, callback);
-    } else {
-      callback();
-    }
+    NpmUtilities.installInDir(pkg.location, [], callback);
   }
 
   hasMatchingDependency(pkg, dependency, showWarning = false) {
