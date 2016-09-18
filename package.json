@@ -1,6 +1,6 @@
 {
   "name": "@zkochan/lerna",
-  "version": "2.2.0",
+  "version": "2.2.1",
   "description": "Tool for managing JavaScript projects with multiple packages",
   "main": "lib/index.js",
   "scripts": {
